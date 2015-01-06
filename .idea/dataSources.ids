@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="smarthouse" uuid="59782720-431e-4966-ba13-8fd48ad5ccf4">
+    <database-info product="MySQL" version="5.6.17" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="smarthouse"/>
+    <table name="eventos" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idLegoRecurso" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="timestamp" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="sentido" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Evento_LegosRecursos1" columns="idLegoRecurso" ref-table="legosrecursos" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_Evento_LegosRecursos1_idx" unique="false" columns="idLegoRecurso"/>
+    </table>
+    <table name="horarios" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="horaInicio" sqlType="TIME" precision="8" scale="0" nullable="false" jdbcType="92"/>
+      <column name="horaFin" sqlType="TIME" precision="8" scale="0" nullable="false" jdbcType="92"/>
+      <column name="idLegoRecurso" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Horarios_LegosRecursos1" columns="idLegoRecurso" ref-table="legosrecursos" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_Horarios_LegosRecursos1_idx" unique="false" columns="idLegoRecurso"/>
+    </table>
+    <table name="legos" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="mac" sqlType="VARCHAR" precision="12" scale="0" nullable="false" jdbcType="12"/>
+      <column name="idTipoLego" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Legos_TiposLego" columns="idTipoLego" ref-table="tiposlego" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_LegosRecursos_Legos1" table="legosrecursos" schema="" catalog="smarthouse" columns="idLego"/>
+      <index name="fk_Legos_TiposLego_idx" unique="false" columns="idTipoLego"/>
+    </table>
+    <table name="legosrecursos" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idLego" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idRecurso" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_LegosRecursos_Legos1" columns="idLego" ref-table="legos" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_LegosRecursos_Recursos1" columns="idRecurso" ref-table="recursos" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_Evento_LegosRecursos1" table="eventos" schema="" catalog="smarthouse" columns="idLegoRecurso"/>
+      <exported-key name="fk_Horarios_LegosRecursos1" table="horarios" schema="" catalog="smarthouse" columns="idLegoRecurso"/>
+      <index name="fk_LegosRecursos_Legos1_idx" unique="false" columns="idLego"/>
+      <index name="fk_LegosRecursos_Recursos1_idx" unique="false" columns="idRecurso"/>
+    </table>
+    <table name="recursos" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="descripcion" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="conHorario" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="idTipoLego" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_Recursos_TiposLego1" columns="idTipoLego" ref-table="tiposlego" ref-schema="" ref-catalog="smarthouse" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_LegosRecursos_Recursos1" table="legosrecursos" schema="" catalog="smarthouse" columns="idRecurso"/>
+      <index name="fk_Recursos_TiposLego1_idx" unique="false" columns="idTipoLego"/>
+    </table>
+    <table name="tiposlego" schema="" catalog="smarthouse" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="descripcion" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_Legos_TiposLego" table="legos" schema="" catalog="smarthouse" columns="idTipoLego"/>
+      <exported-key name="fk_Recursos_TiposLego1" table="recursos" schema="" catalog="smarthouse" columns="idTipoLego"/>
+    </table>
+  </data-source>
+</component>
